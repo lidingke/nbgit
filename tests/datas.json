@@ -1,8 +1,23 @@
 {
-  "commits":[
-    {"uuid":"abcd1234","parent":"root","chirld":["abcd1235"]},
-    {"uuid":"abcd1235","parent":"abcd1234","chirld":["abcd1236"]},
-    {"uuid":"abcd1236","parent":"abcd1235","chirld":[]}
+  "commits": [
+    {
+      "uuid": "abcd1234",
+      "parent": "root",
+      "children": [
+        "abcd1235"
+      ]
+    },
+    {
+      "uuid": "abcd1235",
+      "parent": "abcd1234",
+      "children": [
+        "abcd1236"
+      ]
+    },
+    {
+      "uuid": "abcd1236",
+      "parent": "abcd1235",
+      "children": []
+    }
   ]
-
 }

@@ -28,3 +28,7 @@ def test_change_commit_to():
     # print(c)
     # print(n2)
     # print(n4)
+
+
+def test_load_commit_tree():
+    c = Commit_Tree('tests/datas.json')

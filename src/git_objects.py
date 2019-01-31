@@ -1,5 +1,9 @@
+import json
 import pdb
-import uuid
+import uuid as UUID
+
+import os
+
 
 class Commit(object):
     """
@@ -8,11 +12,17 @@ class Commit(object):
     """
 
 
-    def __init__(self,parent):
+    def __init__(self,parent,uuid=None,children=None):
+        if children:
+            self.children=children
         self.children = []
+        # self.children = []
         self.add_parent(parent)
         self.__cell_list = []
-        self.uuid = str(uuid.uuid1())
+        if uuid:
+            self.uuid = uuid
+        else:
+            self.uuid = str(UUID.uuid1())
 
 
     def add_cell(self):
@@ -35,6 +45,7 @@ class Commit(object):
             [c.uuid for c in self.children]
         )
 
+
     # def __repr__(self):
     #     return self.__str__()
     # @classmethod
@@ -45,8 +56,26 @@ class Commit_Tree():
         if not dir:
             self.root = self._init_commit_tree()
             self.commits = {}
+        else:
+            with open(dir,'rb') as f:
 
-        
+                self.datas = json.loads(f.read().decode('utf-8'))
+                self.build_tree(self.datas['commits'])
+
+    def build_tree(self,lst):
+        self.commits = {l["uuid"]:Commit(uuid=l["uuid"],parent=l["parent"],children=l["child"])
+                        for l in lst}
+        uuid = None
+        for p in lst:
+            if p["parent"] == "root":
+                uuid = p["uuid"]
+        if not uuid:
+            raise ValueError("commit tree must have a root")
+        self.root=self.commits[uuid]
+        return self.root
+        # for c in self.commits:
+        #     c.parent =
+
 
     def _init_commit_tree(self):
         root = Commit('root')
