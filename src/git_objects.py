@@ -79,6 +79,13 @@ class Commit_Tree():
         # for c in self.commits:
         #     c.parent =
 
+#todo: userdict commits
+    # def save(self,dir=None):
+    #     commits = [{''} for c in self.commits.values()]
+    #     d = json.dumps(self.datas)
+    #     with open(dir,'wb') as f:
+    #         f.write(d.encode('utf-8'))
+
     def _init_commit_tree(self):
         root = Commit('root')
         return root
