@@ -1,3 +1,5 @@
+import os
+
 from git_objects import Commit,Commit_Tree
 
 
@@ -31,4 +33,5 @@ def test_change_commit_to():
 
 
 def test_load_commit_tree():
-    c = Commit_Tree('tests/datas.json')
+    # print(os.getcwd())
+    c = Commit_Tree('../tests/datas.json')
