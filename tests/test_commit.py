@@ -1,9 +1,9 @@
+import json
 import os
 import logging
 
 
-from git_objects import Commit,Commit_Tree
-
+from git_objects import Commit, Commit_Tree, Commits
 
 logger = logging.getLogger(__name__)
 
@@ -41,8 +41,12 @@ def test_load_commit_tree():
     c = Commit_Tree('../data/datas_for_tests.json')
 
 
-def test_load_commit_tree():
+def test_save_commit_tree():
     # print(os.getcwd())
-    c = Commit_Tree('../data/datas_for_tests.json')
-
+    # c = Commit_Tree('../data/datas_for_tests.json')
+    c = Commits()
+    with open('../data/datas_for_tests.json','rb') as f:
+        datas = json.loads(f.read().decode('utf-8'))
+        c.build_from(datas['commits'])
+    print(c.data)
 

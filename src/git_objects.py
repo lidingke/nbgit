@@ -3,12 +3,12 @@ import pdb
 import uuid as UUID
 
 import os
+from collections import UserDict
 
 
 class Commit(object):
     """
     Commit-> N*Blob
-
     """
 
     def __init__(self, parent, uuid=None, children=None):
@@ -27,9 +27,10 @@ class Commit(object):
         pass
 
     def add_parent(self, parent):
+        self.parent = parent
         if parent in ('root', 'temp'):
             return parent
-        self.parent = parent
+
         self.parent.children.append(self)
         return parent
 
@@ -38,15 +39,46 @@ class Commit(object):
         self.parent = parent
 
     def __repr__(self):
-        return "uuid-self:{}-parent:{}-child:{}:{}".format(
+        if self.parent in ('root','temp'):
+            return 'uuid-self:{}-root'.format(self.uuid)
+        # print(type(self),self.uuid,self.parent,self.children)
+        _ =  "uuid-self:{}-parent:{}-child:{}:{}".format(
             self.uuid, self.parent.uuid, len(self.children),
-            [c.uuid for c in self.children]
+            ",".join(c.uuid for c in self.children)
         )
+        # print(_)
+        return _
 
     # def __repr__(self):
     #     return self.__str__()
     # @classmethod
 
+
+class Commits(UserDict):
+
+    def build_from(self,lst):
+        self.data = {l["uuid"]: Commit(uuid=l["uuid"], parent='temp')
+                        for l in lst}
+        temp_data = {l["uuid"]: l for l in lst}
+        for c in self.data.values():
+            i = c.uuid
+            parent = temp_data[i]["parent"]
+            if parent in  ('root',):
+                c.parent = parent
+            else:
+                c.parent = self.data[parent]
+            c.children = [self.data[ch] for ch in temp_data[i]["children"]]
+        uuid = None
+        for p in lst:
+            if p["parent"] == "root":
+                uuid = p["uuid"]
+        if not uuid:
+            raise ValueError("commit tree must have a root")
+        self.root = self.data[uuid]
+        return self.root
+
+    # def __repr__(self):
+    #     return  "-".join(r.uuid for r in self.data.values())
 
 class Commit_Tree():
 
@@ -85,6 +117,7 @@ class Commit_Tree():
     #     d = json.dumps(self.datas)
     #     with open(dir,'wb') as f:
     #         f.write(d.encode('utf-8'))
+
 
     def _init_commit_tree(self):
         root = Commit('root')
