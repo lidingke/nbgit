@@ -57,6 +57,12 @@ class Commit(object):
 class Commits(UserDict):
 
     def build_from(self,lst):
+        """
+        1. build temp commit
+        2. rebuild these commit's parent and chirldren
+        :param lst->[{"uuid": "abcd1234","parent": "root","children": ["abcd1235"]]:
+        :return:
+        """
         self.data = {l["uuid"]: Commit(uuid=l["uuid"], parent='temp')
                         for l in lst}
         temp_data = {l["uuid"]: l for l in lst}
@@ -83,35 +89,35 @@ class Commits(UserDict):
 class Commit_Tree():
 
     def __init__(self, dir=None):
+        self.commits = Commits()
         if not dir:
             self.root = self._init_commit_tree()
-            self.commits = {}
+            # self.commits = {}
         else:
             with open(dir, 'rb') as f:
 
-                self.datas = json.loads(f.read().decode('utf-8'))
-                self.build_tree(self.datas['commits'])
+                datas = json.loads(f.read().decode('utf-8'))
+                self.commits.build_from(datas['commits'])
 
-    def build_tree(self, lst):
-        self.commits = {l["uuid"]: Commit(uuid=l["uuid"], parent='temp')
-                        for l in lst}
-        temp_data = {l["uuid"]: l for l in lst}
-        for c in self.commits.values():
-            i = c.uuid
-            c.parent = temp_data[i]["parent"]
-            c.children = temp_data[i]["children"]
-        uuid = None
-        for p in lst:
-            if p["parent"] == "root":
-                uuid = p["uuid"]
-        if not uuid:
-            raise ValueError("commit tree must have a root")
-        self.root = self.commits[uuid]
-        return self.root
+    # def build_tree(self, lst):
+    #     self.commits = {l["uuid"]: Commit(uuid=l["uuid"], parent='temp')
+    #                     for l in lst}
+    #     temp_data = {l["uuid"]: l for l in lst}
+    #     for c in self.commits.values():
+    #         i = c.uuid
+    #         c.parent = temp_data[i]["parent"]
+    #         c.children = temp_data[i]["children"]
+    #     uuid = None
+    #     for p in lst:
+    #         if p["parent"] == "root":
+    #             uuid = p["uuid"]
+    #     if not uuid:
+    #         raise ValueError("commit tree must have a root")
+    #     self.root = self.commits[uuid]
+    #     return self.root
         # for c in self.commits:
         #     c.parent =
 
-#todo: userdict commits
     # def save(self,dir=None):
     #     commits = [{''} for c in self.commits.values()]
     #     d = json.dumps(self.datas)
