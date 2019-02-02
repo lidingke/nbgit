@@ -94,36 +94,10 @@ class Commit_Tree():
         self.commits = Commits()
         if not dir:
             self.root = self._init_commit_tree()
-            # self.commits = {}
         else:
             with open(dir, 'rb') as f:
                 datas = json.loads(f.read().decode('utf-8'))
                 self.commits.build_from(datas['commits'])
-
-    # def build_tree(self, lst):
-    #     self.commits = {l["uuid"]: Commit(uuid=l["uuid"], parent='temp')
-    #                     for l in lst}
-    #     temp_data = {l["uuid"]: l for l in lst}
-    #     for c in self.commits.values():
-    #         i = c.uuid
-    #         c.parent = temp_data[i]["parent"]
-    #         c.children = temp_data[i]["children"]
-    #     uuid = None
-    #     for p in lst:
-    #         if p["parent"] == "root":
-    #             uuid = p["uuid"]
-    #     if not uuid:
-    #         raise ValueError("commit tree must have a root")
-    #     self.root = self.commits[uuid]
-    #     return self.root
-    # for c in self.commits:
-    #     c.parent =
-
-    # def save(self,dir=None):
-    #     commits = [{''} for c in self.commits.values()]
-    #     d = json.dumps(self.datas)
-    #     with open(dir,'wb') as f:
-    #         f.write(d.encode('utf-8'))
 
     def _init_commit_tree(self):
         root = Commit('root')
@@ -139,7 +113,6 @@ class Commit_Tree():
             raise ValueError('parent type error')
         child = Commit(parent)
         self.commits[child.uuid]=child
-        # parent.chirlds.append(chirld)
         return child
 
     def delete_commit(self):
@@ -151,6 +124,19 @@ class Commit_Tree():
         child.change_parent(parent)
         parent.children.append(child)
         return child
+
+    def is_origin(self,origin,child):
+        #todo:unit test
+        if child.parent == 'root':
+            return False
+
+        p = child.parent
+        while p!= 'root':
+            if p.uuid == origin.uuid:
+                return True
+            p = p.parent
+        return False
+
 
     def __repr__(self):
         listtree = {}
