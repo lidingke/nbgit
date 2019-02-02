@@ -1,7 +1,7 @@
 import json
 import os
 import logging
-
+from collections import UserDict
 
 from git_objects import Commit, Commit_Tree, Commits
 
@@ -31,22 +31,21 @@ def test_change_commit_to():
     assert n4 in n3.children
     assert n4.parent in n3.parent.children
     logger.info(c.__str__())
-    # print(c)
-    # print(n2)
-    # print(n4)
 
-
-def test_load_commit_tree():
-    # print(os.getcwd())
-    c = Commit_Tree('../data/datas_for_tests.json')
-
-
-def test_save_commit_tree():
-    # print(os.getcwd())
-    # c = Commit_Tree('../data/datas_for_tests.json')
+def test_commits_userdict_load():
     c = Commits()
     with open('../data/datas_for_tests.json','rb') as f:
         datas = json.loads(f.read().decode('utf-8'))
         c.build_from(datas['commits'])
-    print(c.data)
+    assert len(c)>0
+    assert isinstance(c,UserDict)
+    for cm in c.values():
+        assert isinstance(cm,Commit)
+    assert "abcd1234" in c
+    assert c["abcd1234"] in c
+
+
+def test_load_commit_tree():
+    c = Commit_Tree('../data/datas_for_tests.json')
+
 

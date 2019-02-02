@@ -15,7 +15,6 @@ class Commit(object):
         if children:
             self.children = children
         self.children = []
-        # self.children = []
         self.add_parent(parent)
         self.__cell_list = []
         if uuid:
@@ -39,10 +38,10 @@ class Commit(object):
         self.parent = parent
 
     def __repr__(self):
-        if self.parent in ('root','temp'):
+        if self.parent in ('root', 'temp'):
             return 'uuid-self:{}-root'.format(self.uuid)
         # print(type(self),self.uuid,self.parent,self.children)
-        _ =  "uuid-self:{}-parent:{}-child:{}:{}".format(
+        _ = "uuid-self:{}-parent:{}-child:{}:{}".format(
             self.uuid, self.parent.uuid, len(self.children),
             ",".join(c.uuid for c in self.children)
         )
@@ -51,40 +50,43 @@ class Commit(object):
 
     # def __repr__(self):
     #     return self.__str__()
-    # @classmethod
 
 
 class Commits(UserDict):
 
-    def build_from(self,lst):
+    def build_from(self, lst):
         """
         1. build temp commit
         2. rebuild these commit's parent and chirldren
         :param lst->[{"uuid": "abcd1234","parent": "root","children": ["abcd1235"]]:
         :return:
         """
-        self.data = {l["uuid"]: Commit(uuid=l["uuid"], parent='temp')
-                        for l in lst}
+        self.data = {l["uuid"]: Commit(uuid=l["uuid"], parent='temp') for l in lst}
         temp_data = {l["uuid"]: l for l in lst}
         for c in self.data.values():
             i = c.uuid
             parent = temp_data[i]["parent"]
-            if parent in  ('root',):
+            if parent in ('root',):
                 c.parent = parent
             else:
                 c.parent = self.data[parent]
             c.children = [self.data[ch] for ch in temp_data[i]["children"]]
-        uuid = None
+        root_exited = None
         for p in lst:
             if p["parent"] == "root":
-                uuid = p["uuid"]
-        if not uuid:
+                root_exited = p["uuid"]
+        if not root_exited:
             raise ValueError("commit tree must have a root")
-        self.root = self.data[uuid]
+        self.root = self.data[root_exited]
         return self.root
 
+
+    def __contains__(self, item):
+        return (item in self.data.keys()) or \
+               (item in self.data.values())
     # def __repr__(self):
     #     return  "-".join(r.uuid for r in self.data.values())
+
 
 class Commit_Tree():
 
@@ -95,7 +97,6 @@ class Commit_Tree():
             # self.commits = {}
         else:
             with open(dir, 'rb') as f:
-
                 datas = json.loads(f.read().decode('utf-8'))
                 self.commits.build_from(datas['commits'])
 
@@ -115,8 +116,8 @@ class Commit_Tree():
     #         raise ValueError("commit tree must have a root")
     #     self.root = self.commits[uuid]
     #     return self.root
-        # for c in self.commits:
-        #     c.parent =
+    # for c in self.commits:
+    #     c.parent =
 
     # def save(self,dir=None):
     #     commits = [{''} for c in self.commits.values()]
@@ -124,21 +125,25 @@ class Commit_Tree():
     #     with open(dir,'wb') as f:
     #         f.write(d.encode('utf-8'))
 
-
     def _init_commit_tree(self):
         root = Commit('root')
+        self.commits[root.uuid]=root
         return root
 
     def new_commit(self, parent):
         if isinstance(parent, str):
             parent = self.commits[parent]
         elif isinstance(parent, Commit):
-            pass
+            assert parent in self.commits.values()
         else:
             raise ValueError('parent type error')
         child = Commit(parent)
+        self.commits[child.uuid]=child
         # parent.chirlds.append(chirld)
         return child
+
+    def delete_commit(self):
+        pass
 
     def change_commit_to(self, child, parent):
         # if child in parent.children:
