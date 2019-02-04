@@ -3,7 +3,7 @@ import os
 import logging
 from collections import UserDict
 
-from git_objects import Commit, Commit_Tree, Commits
+from commit import Commit, Commit_Tree, Commits
 
 logger = logging.getLogger(__name__)
 
