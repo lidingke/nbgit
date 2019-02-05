@@ -50,9 +50,12 @@ def test_persistence():
 
     with shelve.open('../data/spam') as db:
         for k,v in db.items():
-            if v['db_type']=='meta':
+            if v['db_type']=='meta' and v.get('dir','') == '../data/Untitled.ipynb':
                 print(k)
                 dfsprint(v['metadata'])
+
+    bb.persistence('../data/Untitled_diff.ipynb')
+
 
 
 def test_build():
@@ -60,10 +63,10 @@ def test_build():
     key = None
     with shelve.open('../data/spam') as db:
         for k,v in db.items():
-            if v['db_type']=='meta':
+            if v['db_type']=='meta' and v.get('dir','') == '../data/Untitled.ipynb':
                 key = k
     if key == None:
         raise ValueError('none meta key')
 
     # with shelve.open('../data/spam') as db:
-    bb.build(key,'../data/Untitled_build.ipynb')
+    bb.rebuild(key, '../data/Untitled_build.ipynb')

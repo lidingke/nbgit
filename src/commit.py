@@ -56,7 +56,7 @@ class Commits(UserDict):
 
     def build_from(self, lst):
         """
-        1. build temp commit
+        1. rebuild temp commit
         2. rebuild these commit's parent and chirldren
         :param lst->[{"uuid": "abcd1234","parent": "root","children": ["abcd1235"]]:
         :return:
