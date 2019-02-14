@@ -43,23 +43,26 @@ def test_load_ipynb_to_json():
         # for jj in j['metadata'].items():
 
             # print(jj)
+ipynb = '../data/Untitled.ipynb'
 
 def test_persistence():
-    bb = Blob('../data/spam')
-    bb.persistence('../data/Untitled.ipynb')
+    db = shelve.open('../data/spam', writeback=True)
+    bb = Blob(db,ipynb)
+    bb.persistence()
 
     with shelve.open('../data/spam') as db:
         for k,v in db.items():
             if v['db_type']=='meta' and v.get('dir','') == '../data/Untitled.ipynb':
                 print(k)
                 dfsprint(v['metadata'])
-
-    bb.persistence('../data/Untitled_diff.ipynb')
+    bb.ipynb = '../data/Untitled_diff.ipynb'
+    bb.persistence()
 
 
 
 def test_build():
-    bb = Blob('../data/spam')
+    db = shelve.open('../data/spam', writeback=True)
+    bb = Blob(db,ipynb)
     key = None
     with shelve.open('../data/spam') as db:
         for k,v in db.items():
@@ -69,4 +72,5 @@ def test_build():
         raise ValueError('none meta key')
 
     # with shelve.open('../data/spam') as db:
-    bb.rebuild(key, '../data/Untitled_build.ipynb')
+    bb.ipynb_write ='../data/Untitled_build.ipynb'
+    bb.rebuild(key, )

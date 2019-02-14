@@ -1,29 +1,31 @@
 import json
 import pdb
+import shelve
 import uuid as UUID
 
 import os
 from collections import UserDict
 
+from blob import Blob
+from config import base_json
+
 
 class Commit(object):
     """
-    Commit-> N*Blob
+    Commit.uuid-> hex:Blob(hexs:cells)
     """
 
-    def __init__(self, parent, uuid=None, children=None):
+    def __init__(self, parent, uuid, cell_list=(), children=None, merge_commit=None):
         if children:
             self.children = children
         self.children = []
         self.add_parent(parent)
-        self.__cell_list = []
-        if uuid:
-            self.uuid = uuid
-        else:
-            self.uuid = str(UUID.uuid1())
+        self.cell_list = cell_list
+        self.uuid = uuid
+        self.merge_commit = merge_commit
 
-    def add_cell(self):
-        pass
+    # def add_cell(self):
+    #     pass
 
     def add_parent(self, parent):
         self.parent = parent
@@ -80,7 +82,6 @@ class Commits(UserDict):
         self.root = self.data[root_exited]
         return self.root
 
-
     def __contains__(self, item):
         return (item in self.data.keys()) or \
                (item in self.data.values())
@@ -90,19 +91,30 @@ class Commits(UserDict):
 
 class Commit_Tree():
 
-    def __init__(self, dir=None):
+    def __init__(self, ipynb, db=None, rebuild_dir=None, ):
         self.commits = Commits()
-        if not dir:
+        if db:
+            self.db = shelve.open(db, writeback=True)
+        else:
+            self.db = db
+        self.ipynb = ipynb
+        if not rebuild_dir:
             self.root = self._init_commit_tree()
         else:
-            with open(dir, 'rb') as f:
+            with open(rebuild_dir, 'rb') as f:
                 datas = json.loads(f.read().decode('utf-8'))
                 self.commits.build_from(datas['commits'])
 
     def _init_commit_tree(self):
-        root = Commit('root')
-        self.commits[root.uuid]=root
+        root = Commit('root', uuid='root')
+        self.commits[root.uuid] = root
         return root
+
+    def get_new_commit_on_ipynb(self, ipynb, db):
+        bb = Blob(db, ipynb)
+        uuid = bb.persistence()
+        cell_list = bb.cells
+        return uuid, cell_list
 
     def new_commit(self, parent):
         if isinstance(parent, str):
@@ -111,8 +123,9 @@ class Commit_Tree():
             assert parent in self.commits.values()
         else:
             raise ValueError('parent type error')
-        child = Commit(parent)
-        self.commits[child.uuid]=child
+        uuid, cells = self.get_new_commit_on_ipynb(self.ipynb, self.db)
+        child = Commit(parent, uuid, cells)
+        self.commits[child.uuid] = child
         return child
 
     def delete_commit(self):
@@ -125,18 +138,17 @@ class Commit_Tree():
         parent.children.append(child)
         return child
 
-    def is_origin(self,origin,child):
-        #todo:unit test
+    def is_origin(self, origin, child):
+        # todo:unit test
         if child.parent == 'root':
             return False
 
         p = child.parent
-        while p!= 'root':
+        while p != 'root':
             if p.uuid == origin.uuid:
                 return True
             p = p.parent
         return False
-
 
     def __repr__(self):
         listtree = {}
@@ -161,17 +173,45 @@ class Commit_Tree():
         return "\n".join(_)
 
 
-
-
 class Branch(object):
 
-    def __init__(self, head):
-        self.head = head
-        self.labels = set(self.head)
-        self.current = head
+    def __init__(self, commit_tree, data_dir=None):
+        if data_dir:
+            if not os.path.exists(data_dir):
+                with open(data_dir, 'wb') as f:
+                    f.write(json.dumps(base_json).encode('utf-8'))
 
-    def new_label(self, label):
-        if label in self.labels:
-            self.labels.add(label)
+            with open(data_dir,'rb') as f:
+                data = json.loads(f.read().decode('utf-8'))
         else:
-            raise ValueError('Duplicate label.')
+            data = self.new_data()
+        self.commit_tree = commit_tree
+
+        self.current_branch = data['current']['branch']
+        node_hex = data['current']['node']
+        self.current_node = self.commit_tree.commits[node_hex]
+        self.branch_list = data['branches']
+
+
+    def new_data(self):
+        raise NotImplementedError
+
+    def new_commit(self):
+        parent = self.current_node
+        node = self.commit_tree.new_commit(parent)
+        self.current_node =node
+
+    def change_current_branch(self,flag):
+        assert flag in self.branch_list.keys()
+        self.current_branch = flag
+        self.current_node = self.branch_list[flag][-1]
+
+    def add_new_branch(self,flag):
+        raise NotImplementedError
+
+    def reset(self,hex):
+        pass
+
+
+
+

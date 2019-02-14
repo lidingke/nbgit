@@ -7,7 +7,8 @@ from diff import replace, equal, insert, delete, get_reversed_opecodes, construc
 
 
 def test_build():
-    bb = Blob('../data/spam')
+    db = shelve.open('../data/spam', writeback=True)
+    bb = Blob(db,'../data/Untitled.ipynb')
     key_origin,key_diff = None,None
     with shelve.open('../data/spam') as db:
         for k,v in db.items():
