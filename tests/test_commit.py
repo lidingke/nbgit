@@ -4,6 +4,8 @@ import logging
 import shelve
 from collections import UserDict
 import uuid as UUID
+import sys
+sys.path.append('src')
 from commit import Commit, Commit_Tree, Commits
 
 logger = logging.getLogger(__name__)

@@ -2,6 +2,8 @@ import json
 import shelve
 from hashlib import sha1, md5
 import hashlib
+import sys
+sys.path.append('.')
 from blob import Blob
 
 
