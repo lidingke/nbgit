@@ -4,7 +4,9 @@ import sys
 
 from nb.inits import init_bare_repo
 
-test_ipynb_dir = 'data/Untitiled.ipynb'
+#rm ..\nbgit\data\.jupyter_notebook\*
+
+test_ipynb_dir = 'data/Untitled.ipynb'
 
 def test_init_bare_repo():
     """

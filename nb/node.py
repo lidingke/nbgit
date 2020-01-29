@@ -26,12 +26,20 @@ class MetaNode(object):
 
 
     @property
-    def commites(self, ):
-        return self._node['commites']
+    def commite(self, ):
+        return self._node['commite']
 
-    @commites.setter
-    def commites(self, value):
-        self._node['commites'] = value
+    @commite.setter
+    def commite(self, value):
+        self._node['commite'] = value
+
+    @property
+    def parents(self, ):
+        return self._node['parents']
+
+    # @commite.setter
+    # def parents(self, value):
+    #     self._node['parents'] = value
 
 
 
@@ -42,13 +50,24 @@ class Cache(MetaNode):
         self._db = db
         self.nodes = self._db.get_item('nodes')
         if self.nodes == []:
-            self.nodes.append(base_node_json)
+            raise ValueError('empty root')
         self._node = self.nodes[-1]
+        self.lock = False
 
     def save_node(self):
         self.nodes.append(base_node_json)
         self._node = self.nodes[-1]
+        self.lock = False
         # return self.current_node
+
+    # @property
+    # def is_changeable(self):
+        # return self._node['lines'
+
+    def set_parents(self, index):
+        # import pdb; pdb.set_trace()
+        if index not in self.parents:
+            self._node['parents'].append(index)
 
 class Node(MetaNode):
 
@@ -61,6 +80,13 @@ class Node(MetaNode):
         if index not in self.nodes.keys():
             raise ValueError('error index')
         self._node = self.nodes[index]
+
+
+    # def __next__(self, ):
+    #     p = self._node.parents 
+
+    #     for i in p:
+
 
 def checkout_node(self, node, ipynb):
     #TODO:checkout_node

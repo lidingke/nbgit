@@ -9,11 +9,9 @@ workspace_dir = '.jupyter_notebook'
 
 bare_db_json={
   "lines": {},
-  "branche_refs":{
-    "master":None,
+  "branch_refs":{
+    "master":'root',
   },
-#   "cache_node":{'head':None,
-#         'lines':[]},
   "nodes":[],
   "current_branch":"master"
 }
@@ -22,8 +20,9 @@ bare_db_json={
 base_node_json = {
     'index':'',
     'lines':[],
-    'commits':'',
+    'commit':'',
     'tags':[''],
+    'parents':[]
 }
 
 cell_line = {
