@@ -11,6 +11,14 @@ def get_random_line():
         line.append(chr(c))
     return "".join(line)
 
+def test_init_bare_repo():
+    """
+    nbgit init: run cmd in ipynb, create a emputy file.
+    """
+    cb = Branch(test_ipynb_dir)
+    # assert cb
+    cb.init_cmd()
+
 def test_add_cmd():
     add_lines = []
     for i in range(1,randint(3,20)):

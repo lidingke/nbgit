@@ -1,7 +1,8 @@
 import json
 import hashlib
 from nb.db import  ShelveDB, get_db_dir
-from nb.node import Cache        
+from nb.node import Cache, resume_node, Node
+from nb.config import CacheLockError, InitError
 
 
 def calc_ipynb(ipynb):
@@ -34,29 +35,31 @@ class Branch(object):
         self.current = CurrentBranch(db=self._db)
         # self.cache = self._db.get_item('cache_node')
 
-    # def init_cmd(parameter_list):
-        # pass
+    def init_cmd(self):
+        # dir_= get_db_dir(current_ipynb)
+        # sdb = ShelveDB(dir_=dir_)
+        self._db.create_bare_db()
+
 
     def add_cmd(self, ):
-        #TODO change parents
         head, head_cells, cells = calc_ipynb(self.ipynb)
         self.lines_db.update(cells)
         self.cache.index = head
         self.cache.lines = head_cells
-        self.cache.lock = True
+        self.cache.lock_branch = True
         return head
 
 
     def commit_cmd(self, commit):
         # TODO : auto merge commit
         if self.cache.index == None:
-            raise ValueError('emputy cache')
+            raise InitError('emputy cache')
         index = self.cache.index
         self.cache.commit = commit
         self.cache.save_node()
         self.current.current_index = index
         self.cache.set_parents(self.current.current_index)
-        self.cache.lock = False
+        self.cache.lock_branch = False
         return index
 
     def log_cmd(self, ):
@@ -67,9 +70,27 @@ class Branch(object):
             print(index,'=>',parents)
         # for i in self. 
         # self.cac = cell_heads# last node
-    def checkout_cmd(self, index):
-        # TODO instance checkout
+    def checkout_cmd(self, name):
+        # TODO implement checkout
+        if self.cache.lock_branch:
+            raise CacheLockError()
+        self.current.current = name 
+
+    def branch_cmd(self,name):
         pass
+
+
+    def reset_cmd(self, index=None):
+        # TODO implement reset
+        # reset index=None 
+        if self.cache.lock_branch:
+            raise CacheLockError()
+        self._resume_ipynb(index)
+        self.current.current_index = index
+
+    def _resume_ipynb(self, index):
+        node = Node(db=self._db, index=index)
+        resume_node(node,self.ipynb)
 
 
     # def calc_ipynb(self, parameter_list):

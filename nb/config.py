@@ -27,16 +27,26 @@ base_node_json = {
 
 cell_line = {
    "cell_type": "code",
-   "execution_count": 2,
+   "execution_count": 1,
    "metadata": {},
    "outputs": [
-    {
-     "name": "stdout",
-     "output_type": "stream",
-     "text": "abcd\n"
-    }
+    # {
+    #  "name": "stdout",
+    #  "output_type": "stream",
+    #  "text": ""
+    # }
    ],
    "source": [
     "print('abcd')"
    ]
   }
+
+
+class CacheLockError(Exception):
+    def __init__(self,err='cache lock, pls save current cache.'):
+        Exception.__init__(self,err)
+
+class InitError(ValueError):
+    pass
+
+        

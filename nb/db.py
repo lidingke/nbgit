@@ -17,6 +17,7 @@ class ShelveDB(object):
         node0 = self.db['nodes'][0]
         node0['index'] = 'root'
         node0['parents'] = ['root', ]
+        
 
     def get_item(self, key):
         """
