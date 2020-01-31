@@ -1,0 +1,1012 @@
+{
+    "root": {
+        "data": {
+            "id": "71e377cc969e",
+            "created": 1548646336,
+            "text": "git4jupyter",
+            "expandState": "expand"
+        },
+        "children": [
+            {
+                "data": {
+                    "id": "c0396o5uimo0",
+                    "created": 1579791038747,
+                    "text": "GIT origin",
+                    "expandState": "expand"
+                },
+                "children": [
+                    {
+                        "data": {
+                            "id": "c020vx9w64g0",
+                            "created": 1579666067741,
+                            "text": "gitattributes"
+                        },
+                        "children": []
+                    },
+                    {
+                        "data": {
+                            "id": "c03ny1xvqp40",
+                            "created": 1579832680112,
+                            "text": "Blobs|Trees|Commits|Tags",
+                            "priority": 9
+                        },
+                        "children": []
+                    },
+                    {
+                        "data": {
+                            "id": "c08x4r9ndug0",
+                            "created": 1580366395200,
+                            "text": "creat repo"
+                        },
+                        "children": [
+                            {
+                                "data": {
+                                    "id": "c08x502h4s00",
+                                    "created": 1580366414358,
+                                    "text": "init"
+                                },
+                                "children": []
+                            },
+                            {
+                                "data": {
+                                    "id": "c08x5180knk0",
+                                    "created": 1580366416869,
+                                    "text": "clone"
+                                },
+                                "children": []
+                            }
+                        ]
+                    },
+                    {
+                        "data": {
+                            "id": "c08x37ns88w0",
+                            "created": 1580366274155,
+                            "text": "configure"
+                        },
+                        "children": [
+                            {
+                                "data": {
+                                    "id": "c08x3iqztsw0",
+                                    "created": 1580366298294,
+                                    "text": "config"
+                                },
+                                "children": []
+                            }
+                        ]
+                    },
+                    {
+                        "data": {
+                            "id": "c08x3xq68ts0",
+                            "created": 1580366330896,
+                            "text": "branches"
+                        },
+                        "children": [
+                            {
+                                "data": {
+                                    "id": "c08x43y7e740",
+                                    "created": 1580366344442,
+                                    "text": "branch"
+                                },
+                                "children": []
+                            },
+                            {
+                                "data": {
+                                    "id": "c08x46grnls0",
+                                    "created": 1580366349918,
+                                    "text": "checkout"
+                                },
+                                "children": []
+                            },
+                            {
+                                "data": {
+                                    "id": "c08x49hggtk0",
+                                    "created": 1580366356490,
+                                    "text": "merge"
+                                },
+                                "children": []
+                            },
+                            {
+                                "data": {
+                                    "id": "c08x4go30o80",
+                                    "created": 1580366372128,
+                                    "text": "branch -d"
+                                },
+                                "children": []
+                            },
+                            {
+                                "data": {
+                                    "id": "c08x99mjry00",
+                                    "created": 1580366748619,
+                                    "text": "status"
+                                },
+                                "children": []
+                            }
+                        ]
+                    },
+                    {
+                        "data": {
+                            "id": "c08x5u9l30g0",
+                            "created": 1580366480091,
+                            "text": "sync"
+                        },
+                        "children": [
+                            {
+                                "data": {
+                                    "id": "c08x66eyu740",
+                                    "created": 1580366506538,
+                                    "text": "fetch"
+                                },
+                                "children": []
+                            },
+                            {
+                                "data": {
+                                    "id": "c08x68ktsm00",
+                                    "created": 1580366511246,
+                                    "text": "merge"
+                                },
+                                "children": []
+                            },
+                            {
+                                "data": {
+                                    "id": "c08x6ar75ds0",
+                                    "created": 1580366515984,
+                                    "text": "push"
+                                },
+                                "children": []
+                            },
+                            {
+                                "data": {
+                                    "id": "c08x6by8va80",
+                                    "created": 1580366518587,
+                                    "text": "pull"
+                                },
+                                "children": []
+                            }
+                        ]
+                    },
+                    {
+                        "data": {
+                            "id": "c08x6n4skx40",
+                            "created": 1580366542928,
+                            "text": "changes"
+                        },
+                        "children": [
+                            {
+                                "data": {
+                                    "id": "c08x6r7vipc0",
+                                    "created": 1580366551821,
+                                    "text": "log"
+                                },
+                                "children": []
+                            },
+                            {
+                                "data": {
+                                    "id": "c08x6wm3p2w0",
+                                    "created": 1580366563565,
+                                    "text": "diff"
+                                },
+                                "children": []
+                            },
+                            {
+                                "data": {
+                                    "id": "c08x70fm8v40",
+                                    "created": 1580366571881,
+                                    "text": "show"
+                                },
+                                "children": []
+                            },
+                            {
+                                "data": {
+                                    "id": "c08x741b0a80",
+                                    "created": 1580366579722,
+                                    "text": "add"
+                                },
+                                "children": []
+                            },
+                            {
+                                "data": {
+                                    "id": "c08x771nx600",
+                                    "created": 1580366586274,
+                                    "text": "commit"
+                                },
+                                "children": []
+                            }
+                        ]
+                    },
+                    {
+                        "data": {
+                            "id": "c08x8ly669c0",
+                            "created": 1580366697079,
+                            "text": "redo"
+                        },
+                        "children": [
+                            {
+                                "data": {
+                                    "id": "c08x8ou1g3c0",
+                                    "created": 1580366703360,
+                                    "text": "reset"
+                                },
+                                "children": []
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "data": {
+                    "id": "c03ofg2zqnk0",
+                    "created": 1579834043086,
+                    "text": "python-git"
+                },
+                "children": [
+                    {
+                        "data": {
+                            "id": "c03oflca1dk0",
+                            "created": 1579834054532,
+                            "text": "test-doc"
+                        },
+                        "children": [
+                            {
+                                "data": {
+                                    "id": "c03oftm66yg0",
+                                    "created": 1579834072544,
+                                    "text": "repo.bare"
+                                },
+                                "children": []
+                            },
+                            {
+                                "data": {
+                                    "id": "c03og7aqbvs0",
+                                    "created": 1579834102327,
+                                    "text": "repo.config_reader"
+                                },
+                                "children": []
+                            },
+                            {
+                                "data": {
+                                    "id": "c03ogok5kgo0",
+                                    "created": 1579834139903,
+                                    "text": "repo.is_dirty"
+                                },
+                                "children": []
+                            },
+                            {
+                                "data": {
+                                    "id": "c03ok8zczxc0",
+                                    "created": 1579834419450,
+                                    "text": "repo.heads.refs"
+                                },
+                                "children": []
+                            },
+                            {
+                                "data": {
+                                    "id": "c03okqo0uhc0",
+                                    "created": 1579834457947,
+                                    "text": "repo.tags"
+                                },
+                                "children": []
+                            }
+                        ]
+                    },
+                    {
+                        "data": {
+                            "id": "c03ofsd5yns0",
+                            "created": 1579834069823,
+                            "text": "topic"
+                        },
+                        "children": []
+                    }
+                ]
+            },
+            {
+                "data": {
+                    "id": "c0397fg76200",
+                    "created": 1579791098146,
+                    "text": "self",
+                    "expandState": "expand",
+                    "layout_mind_offset": {
+                        "x": -109,
+                        "y": -623
+                    }
+                },
+                "children": [
+                    {
+                        "data": {
+                            "id": "brklmz9n4n40",
+                            "created": 1548647263370,
+                            "text": "node",
+                            "layout_left_offset": {
+                                "x": -1,
+                                "y": 27
+                            },
+                            "expandState": "collapse",
+                            "priority": 1
+                        },
+                        "children": [
+                            {
+                                "data": {
+                                    "id": "c01fnmu4le80",
+                                    "created": 1579606174799,
+                                    "text": "cell lines",
+                                    "layout_left_offset": {
+                                        "x": -250,
+                                        "y": 229
+                                    }
+                                },
+                                "children": [
+                                    {
+                                        "data": {
+                                            "id": "c01fsployyo0",
+                                            "created": 1579606572640,
+                                            "text": "cell line list == node"
+                                        },
+                                        "children": []
+                                    }
+                                ]
+                            },
+                            {
+                                "data": {
+                                    "id": "c03or09ehmg0",
+                                    "created": 1579834949015,
+                                    "text": "operator",
+                                    "layout_left_offset": {
+                                        "x": -127,
+                                        "y": 30
+                                    }
+                                },
+                                "children": [
+                                    {
+                                        "data": {
+                                            "id": "c03os1hpm3s0",
+                                            "created": 1579835030059,
+                                            "text": "commit"
+                                        },
+                                        "children": [
+                                            {
+                                                "data": {
+                                                    "id": "c03ow6zk96g0",
+                                                    "created": 1579835355479,
+                                                    "text": "save node"
+                                                },
+                                                "children": []
+                                            },
+                                            {
+                                                "data": {
+                                                    "id": "c03owprjoio0",
+                                                    "created": 1579835396353,
+                                                    "text": "node md5 head"
+                                                },
+                                                "children": []
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "data": {
+                                            "id": "c03osr45shs0",
+                                            "created": 1579835085836,
+                                            "text": "checkout"
+                                        },
+                                        "children": [
+                                            {
+                                                "data": {
+                                                    "id": "c03ow36mjag0",
+                                                    "created": 1579835347199,
+                                                    "text": "resume"
+                                                },
+                                                "children": []
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "data": {
+                                            "id": "c03ov26yurk0",
+                                            "created": 1579835266678,
+                                            "text": "add",
+                                            "priority": 1
+                                        },
+                                        "children": [
+                                            {
+                                                "data": {
+                                                    "id": "c03ov9r84qw0",
+                                                    "created": 1579835283141,
+                                                    "text": "md5 op"
+                                                },
+                                                "children": [
+                                                    {
+                                                        "data": {
+                                                            "id": "c03owgn846g0",
+                                                            "created": 1579835376501,
+                                                            "text": "md5 cell lines"
+                                                        },
+                                                        "children": []
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "data": {
+                                                    "id": "c079940uns00",
+                                                    "created": 1580197469829,
+                                                    "text": "current_branch to next"
+                                                },
+                                                "children": []
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "data": {
+                                    "id": "c0799zu60f40",
+                                    "created": 1580197539081,
+                                    "text": "input",
+                                    "layout_left_offset": {
+                                        "x": -50,
+                                        "y": 127
+                                    }
+                                },
+                                "children": [
+                                    {
+                                        "data": {
+                                            "id": "c079a1b33a80",
+                                            "created": 1580197542281,
+                                            "text": "db_dir"
+                                        },
+                                        "children": []
+                                    },
+                                    {
+                                        "data": {
+                                            "id": "c079a8cgba80",
+                                            "created": 1580197557601,
+                                            "text": "ipynb_dir"
+                                        },
+                                        "children": []
+                                    }
+                                ]
+                            },
+                            {
+                                "data": {
+                                    "id": "c079chk4i8w0",
+                                    "created": 1580197734385,
+                                    "text": "node object",
+                                    "layout_left_offset": {
+                                        "x": -64,
+                                        "y": 157
+                                    }
+                                },
+                                "children": [
+                                    {
+                                        "data": {
+                                            "id": "c079cl0ts1k0",
+                                            "created": 1580197741925,
+                                            "text": "node_ref"
+                                        },
+                                        "children": []
+                                    },
+                                    {
+                                        "data": {
+                                            "id": "c079cn27y1s0",
+                                            "created": 1580197746363,
+                                            "text": "node_cached"
+                                        },
+                                        "children": []
+                                    }
+                                ]
+                            },
+                            {
+                                "data": {
+                                    "id": "c03nnxlj34o0",
+                                    "created": 1579831887016,
+                                    "text": "short print*",
+                                    "layout_left_offset": {
+                                        "x": -213,
+                                        "y": -22
+                                    }
+                                },
+                                "children": []
+                            },
+                            {
+                                "data": {
+                                    "id": "c039d8zg6ts0",
+                                    "created": 1579791554258,
+                                    "text": "db",
+                                    "layout_left_offset": {
+                                        "x": -74,
+                                        "y": -363
+                                    }
+                                },
+                                "children": [
+                                    {
+                                        "data": {
+                                            "id": "c039dbe3vts0",
+                                            "created": 1579791559498,
+                                            "text": "shelve"
+                                        },
+                                        "children": []
+                                    },
+                                    {
+                                        "data": {
+                                            "id": "c03p2ejhha80",
+                                            "created": 1579835842106,
+                                            "text": "md5-per-line"
+                                        },
+                                        "children": []
+                                    },
+                                    {
+                                        "data": {
+                                            "id": "c03p2we4og00",
+                                            "created": 1579835880964,
+                                            "text": "meta per ipynb"
+                                        },
+                                        "children": [
+                                            {
+                                                "data": {
+                                                    "id": "c05j9v16lkg0",
+                                                    "created": 1580022619808,
+                                                    "text": "md5-all-lines"
+                                                },
+                                                "children": []
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "data": {
+                                            "id": "c03p2mdnd480",
+                                            "created": 1579835859167,
+                                            "text": "branch refs"
+                                        },
+                                        "children": []
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "data": {
+                            "id": "c0399hyb6kg0",
+                            "created": 1579791260324,
+                            "text": "branch",
+                            "layout_left_offset": {
+                                "x": -91.74999986961473,
+                                "y": 50.99999910593033
+                            },
+                            "expandState": "collapse",
+                            "priority": 2
+                        },
+                        "children": [
+                            {
+                                "data": {
+                                    "id": "c0399lnawlc0",
+                                    "created": 1579791268365,
+                                    "text": "branch_line"
+                                },
+                                "children": []
+                            },
+                            {
+                                "data": {
+                                    "id": "c03ozamqfj40",
+                                    "created": 1579835598503,
+                                    "text": "refs"
+                                },
+                                "children": [
+                                    {
+                                        "data": {
+                                            "id": "c03ozctsls80",
+                                            "created": 1579835603283,
+                                            "text": "HEAD"
+                                        },
+                                        "children": []
+                                    },
+                                    {
+                                        "data": {
+                                            "id": "c03ozejxsaw0",
+                                            "created": 1579835607041,
+                                            "text": "master"
+                                        },
+                                        "children": []
+                                    }
+                                ]
+                            },
+                            {
+                                "data": {
+                                    "id": "c039j5ziatc0",
+                                    "created": 1579792017916,
+                                    "text": "parent node"
+                                },
+                                "children": [
+                                    {
+                                        "data": {
+                                            "id": "c03p41ulckg0",
+                                            "created": 1579835971208,
+                                            "text": "only parent node"
+                                        },
+                                        "children": []
+                                    }
+                                ]
+                            },
+                            {
+                                "data": {
+                                    "id": "c039komir1k0",
+                                    "created": 1579792136854,
+                                    "text": "sub node*"
+                                },
+                                "children": []
+                            },
+                            {
+                                "data": {
+                                    "id": "c039l9ld53k0",
+                                    "created": 1579792182496,
+                                    "text": "merge"
+                                },
+                                "children": []
+                            },
+                            {
+                                "data": {
+                                    "id": "c039lre2e3s0",
+                                    "created": 1579792221237,
+                                    "text": "diff"
+                                },
+                                "children": []
+                            }
+                        ]
+                    },
+                    {
+                        "data": {
+                            "id": "c039d5ehtb40",
+                            "created": 1579791546460,
+                            "text": "init",
+                            "layout_left_offset": {
+                                "x": -2.2499997578561306,
+                                "y": -136.7499926425519
+                            },
+                            "priority": 1,
+                            "expandState": "collapse"
+                        },
+                        "children": [
+                            {
+                                "data": {
+                                    "id": "c039dckqdls0",
+                                    "created": 1579791562075,
+                                    "text": "work dir",
+                                    "layout_left_offset": {
+                                        "x": -8,
+                                        "y": -111.24999916180974
+                                    }
+                                },
+                                "children": []
+                            },
+                            {
+                                "data": {
+                                    "id": "c03otpyt90g0",
+                                    "created": 1579835161700,
+                                    "text": "operator",
+                                    "layout_left_offset": {
+                                        "x": -34,
+                                        "y": -44
+                                    }
+                                },
+                                "children": [
+                                    {
+                                        "data": {
+                                            "id": "c03ottz0kpk0",
+                                            "created": 1579835170419,
+                                            "text": "init rare repo"
+                                        },
+                                        "children": [
+                                            {
+                                                "data": {
+                                                    "id": "c03oujd9h0g0",
+                                                    "created": 1579835225701,
+                                                    "text": "init workdir"
+                                                },
+                                                "children": []
+                                            },
+                                            {
+                                                "data": {
+                                                    "id": "c03ounw9t400",
+                                                    "created": 1579835235557,
+                                                    "text": "init db"
+                                                },
+                                                "children": []
+                                            },
+                                            {
+                                                "data": {
+                                                    "id": "c03oyl0upnk0",
+                                                    "created": 1579835542760,
+                                                    "text": "config"
+                                                },
+                                                "children": []
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "data": {
+                            "id": "c03a3cokfag0",
+                            "created": 1579793599775,
+                            "text": "log",
+                            "priority": 2,
+                            "layout_left_offset": {
+                                "x": -45,
+                                "y": -52
+                            },
+                            "expandState": "collapse"
+                        },
+                        "children": [
+                            {
+                                "data": {
+                                    "id": "c03a3dtvlpc0",
+                                    "created": 1579793602273,
+                                    "text": "不区分branch，查看所有log",
+                                    "layout_left_offset": {
+                                        "x": -41,
+                                        "y": 3
+                                    }
+                                },
+                                "children": []
+                            }
+                        ]
+                    },
+                    {
+                        "data": {
+                            "id": "c03nmdhx7ag0",
+                            "created": 1579831764898,
+                            "text": "tags*",
+                            "layout_left_offset": {
+                                "x": -54,
+                                "y": 2
+                            },
+                            "expandState": "collapse"
+                        },
+                        "children": [
+                            {
+                                "data": {
+                                    "id": "c03nmi24x2g0",
+                                    "created": 1579831774827,
+                                    "text": "topic"
+                                },
+                                "children": []
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "data": {
+                    "id": "c0396o5uimo0",
+                    "created": 1579791038747,
+                    "text": "Milestone",
+                    "expandState": "expand"
+                },
+                "children": [
+                    {
+                        "data": {
+                            "id": "c08x4r9ndug0",
+                            "created": 1580366395200,
+                            "text": "creat repo"
+                        },
+                        "children": [
+                            {
+                                "data": {
+                                    "id": "c08x502h4s00",
+                                    "created": 1580366414358,
+                                    "text": "init",
+                                    "progress": 9
+                                },
+                                "children": []
+                            }
+                        ]
+                    },
+                    {
+                        "data": {
+                            "id": "c08x37ns88w0",
+                            "created": 1580366274155,
+                            "text": "configure"
+                        },
+                        "children": [
+                            {
+                                "data": {
+                                    "id": "c08x3iqztsw0",
+                                    "created": 1580366298294,
+                                    "text": "config"
+                                },
+                                "children": []
+                            }
+                        ]
+                    },
+                    {
+                        "data": {
+                            "id": "c08x3xq68ts0",
+                            "created": 1580366330896,
+                            "text": "branches"
+                        },
+                        "children": [
+                            {
+                                "data": {
+                                    "id": "c08x43y7e740",
+                                    "created": 1580366344442,
+                                    "text": "branch",
+                                    "progress": 6
+                                },
+                                "children": []
+                            },
+                            {
+                                "data": {
+                                    "id": "c08x46grnls0",
+                                    "created": 1580366349918,
+                                    "text": "checkout",
+                                    "progress": 6
+                                },
+                                "children": []
+                            },
+                            {
+                                "data": {
+                                    "id": "c08x49hggtk0",
+                                    "created": 1580366356490,
+                                    "text": "merge"
+                                },
+                                "children": []
+                            },
+                            {
+                                "data": {
+                                    "id": "c08x4go30o80",
+                                    "created": 1580366372128,
+                                    "text": "branch -d"
+                                },
+                                "children": []
+                            },
+                            {
+                                "data": {
+                                    "id": "c08x99mjry00",
+                                    "created": 1580366748619,
+                                    "text": "status"
+                                },
+                                "children": []
+                            }
+                        ]
+                    },
+                    {
+                        "data": {
+                            "id": "c08x5u9l30g0",
+                            "created": 1580366480091,
+                            "text": "sync"
+                        },
+                        "children": [
+                            {
+                                "data": {
+                                    "id": "c08x68ktsm00",
+                                    "created": 1580366511246,
+                                    "text": "merge"
+                                },
+                                "children": []
+                            }
+                        ]
+                    },
+                    {
+                        "data": {
+                            "id": "c08x6n4skx40",
+                            "created": 1580366542928,
+                            "text": "changes"
+                        },
+                        "children": [
+                            {
+                                "data": {
+                                    "id": "c08x6r7vipc0",
+                                    "created": 1580366551821,
+                                    "text": "log",
+                                    "progress": 2
+                                },
+                                "children": []
+                            },
+                            {
+                                "data": {
+                                    "id": "c08x6wm3p2w0",
+                                    "created": 1580366563565,
+                                    "text": "diff"
+                                },
+                                "children": []
+                            },
+                            {
+                                "data": {
+                                    "id": "c08x70fm8v40",
+                                    "created": 1580366571881,
+                                    "text": "show"
+                                },
+                                "children": []
+                            },
+                            {
+                                "data": {
+                                    "id": "c08x741b0a80",
+                                    "created": 1580366579722,
+                                    "text": "add",
+                                    "progress": 9
+                                },
+                                "children": []
+                            },
+                            {
+                                "data": {
+                                    "id": "c08x771nx600",
+                                    "created": 1580366586274,
+                                    "text": "commit",
+                                    "progress": 9
+                                },
+                                "children": []
+                            }
+                        ]
+                    },
+                    {
+                        "data": {
+                            "id": "c08x8ly669c0",
+                            "created": 1580366697079,
+                            "text": "redo"
+                        },
+                        "children": [
+                            {
+                                "data": {
+                                    "id": "c08x8ou1g3c0",
+                                    "created": 1580366703360,
+                                    "text": "!!! reset",
+                                    "progress": 2,
+                                    "priority": null
+                                },
+                                "children": []
+                            }
+                        ]
+                    },
+                    {
+                        "data": {
+                            "id": "c08ygl9sg800",
+                            "created": 1580370143628,
+                            "text": "undo feature",
+                            "expandState": "expand",
+                            "layout_left_offset": {
+                                "x": -9,
+                                "y": 61
+                            },
+                            "progress": null
+                        },
+                        "children": [
+                            {
+                                "data": {
+                                    "id": "c08x5180knk0",
+                                    "created": 1580366416869,
+                                    "text": "clone"
+                                },
+                                "children": []
+                            },
+                            {
+                                "data": {
+                                    "id": "c08x66eyu740",
+                                    "created": 1580366506538,
+                                    "text": "fetch"
+                                },
+                                "children": []
+                            },
+                            {
+                                "data": {
+                                    "id": "c08x6ar75ds0",
+                                    "created": 1580366515984,
+                                    "text": "push"
+                                },
+                                "children": []
+                            },
+                            {
+                                "data": {
+                                    "id": "c08x6by8va80",
+                                    "created": 1580366518587,
+                                    "text": "pull"
+                                },
+                                "children": []
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    },
+    "template": "default",
+    "theme": "classic-compact",
+    "version": "1.4.43"
+}

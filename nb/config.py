@@ -49,4 +49,12 @@ class CacheLockError(Exception):
 class InitError(ValueError):
     pass
 
-        
+class NodeError(ValueError):
+  pass
+
+
+class BranchError(ValueError):
+  pass
+
+
+# git clone https://github.com/dulwich/dulwich.git

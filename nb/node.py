@@ -1,9 +1,12 @@
 from copy import deepcopy
 import json
-from nb.config import base_node_json, InitError, cell_line
+from nb.config import base_node_json, InitError, cell_line, NodeError
 
 
 # def get_property
+
+
+
 
 class MetaNode(object):
 
@@ -37,6 +40,7 @@ class MetaNode(object):
 
     @property
     def parents(self, ):
+        """commit cmd add first parents, only merge cmd add other parents"""
         return self._node['parents']
 
     # @commite.setter
@@ -57,7 +61,8 @@ class Cache(MetaNode):
         self.lock_branch = False
 
     def save_node(self):
-        self.nodes.append(base_node_json)
+        base = deepcopy(base_node_json)
+        self.nodes.append(base)
         self._node = self.nodes[-1]
         self.lock_branch = False
 
@@ -74,9 +79,15 @@ class Node(MetaNode):
         if self.nodes == []:
             raise InitError('empty nodes')
             # self.nodes.append(base_node_json)
-        if index not in self.nodes.keys():
-            raise ValueError('error index')
-        self._node = self.nodes[index]
+        self._node = None
+        # if index not in self.nodes.keys():
+            # raise ValueError('error index')
+        for n in self.nodes:
+            if n['index']== index:
+                self._node = n
+                break
+        if not self._node:
+            raise NodeError('can\'t find index in nodes')
 
 
     def get_cells(self):
@@ -93,7 +104,7 @@ class Node(MetaNode):
     #     for i in p:
 
 def resume_node(node, ipynb):
-    # TODO inpl resum node
+    # TODO impl resume node
     with open(ipynb, 'rb') as f:
         js = json.loads(f.read().decode('utf-8'))
     # js['cells'] = node.cells

@@ -36,3 +36,29 @@ def test_add_cmd():
 def test_log_operate():
     cb = Branch(test_ipynb_dir)
     cb.log_cmd()
+
+def test_resume_cmd():
+    # TODO impl resume cmd
+    add_lines = []
+    for i in range(1,randint(3,20)):
+        add_lines.append(
+            ((get_random_line(),get_random_line()))
+        )
+    # len_ = len(add_lines)    
+    assert_ipynb(test_ipynb_dir)
+    cb = Branch(test_ipynb_dir)
+    nums0 = add_tail_lines(test_ipynb_dir,add_lines)
+    cb.add_cmd()
+    index0 = cb.commit_cmd('test commit0')
+    nums1 = add_tail_lines(test_ipynb_dir,add_lines)
+    cb.add_cmd()
+    index1 = cb.commit_cmd('test commit1')
+    nums2 = add_tail_lines(test_ipynb_dir,add_lines)
+    cb.add_cmd()
+    index2 = cb.commit_cmd('test commit2')
+    # resume_last_add(test_ipynb_dir,nums0+nums1+nums2)
+    cb.log_cmd()
+    cb.reset_cmd(index=index0)
+    cb.log_cmd()
+
+

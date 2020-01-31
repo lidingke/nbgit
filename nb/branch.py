@@ -85,12 +85,16 @@ class Branch(object):
         # reset index=None 
         if self.cache.lock_branch:
             raise CacheLockError()
-        self._resume_ipynb(index)
-        self.current.current_index = index
-
-    def _resume_ipynb(self, index):
-        node = Node(db=self._db, index=index)
-        resume_node(node,self.ipynb)
+        if index:
+        # self._resume_ipynb(index)
+            node = Node(db=self._db, index=index)
+            resume_node(node,self.ipynb)
+            self.current.current_index = index
+        else:
+            parent = self.cache.parents[0]
+            resume_node(node,self.ipynb)
+            self.current.current_index = index
+    # def _resume_ipynb(self, index):
 
 
     # def calc_ipynb(self, parameter_list):
