@@ -56,9 +56,9 @@ def test_resume_cmd():
     nums2 = add_tail_lines(test_ipynb_dir,add_lines)
     cb.add_cmd()
     index2 = cb.commit_cmd('test commit2')
-    # resume_last_add(test_ipynb_dir,nums0+nums1+nums2)
     cb.log_cmd()
-    cb.reset_cmd(index=index0)
+    cb.reset_hard_cmd(index=index0)
+    resume_last_add(test_ipynb_dir,nums0)
     cb.log_cmd()
 
 

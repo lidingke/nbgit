@@ -2,7 +2,7 @@ import os
 import os.path as osp
 import shelve
 
-from nb.config import bare_db_json, workspace_dir, base_node_json
+from nb.config import bare_db_json, workspace_dir, base_node_json,get_base_node_json
 
 
 class ShelveDB(object):
@@ -13,10 +13,11 @@ class ShelveDB(object):
     def create_bare_db(self):
         self.db.clear()
         self.db.update(bare_db_json)
-        self.db['nodes'].append(bare_db_json)
-        node0 = self.db['nodes'][0]
-        node0['index'] = 'root'
-        node0['parents'] = ['root', ]
+        # self.db['nodes'].append(bare_db_json)
+        self.db['cache']=get_base_node_json()
+        # node0 = self.db['nodes'][0]
+        # node0['index'] = 'root'
+        # node0['parents'] = ['root', ]
         
 
     def get_item(self, key):

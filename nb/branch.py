@@ -1,13 +1,14 @@
 import json
 import hashlib
-from nb.db import  ShelveDB, get_db_dir
+
+from nb.db import ShelveDB, get_db_dir
 from nb.node import Cache, resume_node, Node
-from nb.config import CacheLockError, InitError
+from nb.config import CacheLockError, InitError, BranchError
 
 
 def calc_ipynb(ipynb):
     with open(ipynb, 'rb') as f:
-            js = json.loads(f.read().decode('utf-8'))
+        js = json.loads(f.read().decode('utf-8'))
     cells = {}
     md5head = hashlib.new('md5')
     heads = []
@@ -19,7 +20,7 @@ def calc_ipynb(ipynb):
         cells[digest] = c
         heads.append(digest)
         md5head.update(digest.encode('utf-8'))
-    return md5head.hexdigest(),heads,cells
+    return md5head.hexdigest(), heads, cells
 
 
 class Branch(object):
@@ -36,10 +37,11 @@ class Branch(object):
         # self.cache = self._db.get_item('cache_node')
 
     def init_cmd(self):
-        # dir_= get_db_dir(current_ipynb)
-        # sdb = ShelveDB(dir_=dir_)
+        # 1. init db node['root']
+        # 2. init cache
+        # 3. init master branch
+        
         self._db.create_bare_db()
-
 
     def add_cmd(self, ):
         head, head_cells, cells = calc_ipynb(self.ipynb)
@@ -49,7 +51,6 @@ class Branch(object):
         self.cache.lock_branch = True
         return head
 
-
     def commit_cmd(self, commit):
         # TODO : auto merge commit
         if self.cache.index == None:
@@ -57,76 +58,83 @@ class Branch(object):
         index = self.cache.index
         self.cache.commit = commit
         self.cache.save_node()
-        self.current.current_index = index
-        self.cache.set_parents(self.current.current_index)
+        self.current.index = index
+        # self.cache.set_parents(self.current.index)
         self.cache.lock_branch = False
         return index
 
     def log_cmd(self, ):
-        # import pdb; pdb.set_trace()
-        for n in self.nodes:
-            index = n['index']
-            parents = n['parents']
-            print(index,'=>',parents)
-        # for i in self. 
-        # self.cac = cell_heads# last node
+        root = self.cache.parents[0]
+        root = Node(db=self._db, index=root)
+        def get_parents(node):
+            n = node.parents[0]
+            print(node.index, '=>', n)
+            if n == 'root':
+                return
+            else:
+                node = Node(db=self._db, index=n)
+                get_parents(node)
+        get_parents(root)
+                # print()
+        # for n in self.nodes:
+        #     index = n['index']
+        #     parents = n['parents']
+        #     print(index, '=>', parents)
+
+
     def checkout_cmd(self, name):
-        # TODO implement checkout
+        # TODO ???implement checkout
+        # checkout mv HEAD only. reset mv HEAD and REF
         if self.cache.lock_branch:
             raise CacheLockError()
-        self.current.current = name 
+        self.current.name = name
 
-    def branch_cmd(self,name):
-        pass
+    def branch_cmd(self, name):
+        head = self.cache.parents[0]
+        self.current.index = head
 
-
-    def reset_cmd(self, index=None):
-        # TODO implement reset
-        # reset index=None 
+    def reset_hard_cmd(self, index=None):
+        # TODO reset cmd need reimplement
         if self.cache.lock_branch:
             raise CacheLockError()
-        if index:
-        # self._resume_ipynb(index)
-            node = Node(db=self._db, index=index)
-            resume_node(node,self.ipynb)
-            self.current.current_index = index
-        else:
-            parent = self.cache.parents[0]
-            resume_node(node,self.ipynb)
-            self.current.current_index = index
-    # def _resume_ipynb(self, index):
+        # if index:
+        node = Node(db=self._db, index=index)
+        resume_node(node, self.ipynb)
+        # self.cache.parents = 
+        self.current.index = index
+        # self.current.
+        # else:
+            # parent = self.cache.parents[0]
+            # resume_node(node, self.ipynb)
+            # self.current.index = index
 
-
-    # def calc_ipynb(self, parameter_list):
-        # pass        
 
 class CurrentBranch(object):
 
-    def __init__(self,db):
+    def __init__(self, db):
         self._db = db
         self.refs = self._db.get_item('branch_refs')
         self.current_branch = self._db.get_item('current_branch')
+        # self.branch_refs = self._db.get_item('branch_refs')
 
-
-    def change_branch_safe(self,name):
-        if self.current_branch == name:
-            raise ValueError('current ref name as same as input:{}'.format(name))
-        if not name in self.refs.keys():
-            raise ValueError('error input ref name.')
-        self._db["current_branch"] = name
 
     @property
-    def current(self):
+    def name(self):
         return self.current_branch
 
-    @current.setter
-    def current(self,value):
-        self.current_branch =value
+    @name.setter
+    def name(self, value):
+        if self.current_branch == value:
+            raise ValueError(
+                'current ref name as same as input:{}'.format(value))
+        if value not in self.refs.keys():
+            raise BranchError('branch-{} unexist.')
+        self.current_branch = value
 
     @property
-    def current_index(self):
+    def index(self):
         return self.refs[self.current_branch]
 
-    @current_index.setter
-    def current_index(self,value):
+    @index.setter
+    def index(self, value):
         self.refs[self.current_branch] = value
