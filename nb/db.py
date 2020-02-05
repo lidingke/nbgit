@@ -15,6 +15,7 @@ class ShelveDB(object):
         self.db.update(bare_db_json)
         # self.db['nodes'].append(bare_db_json)
         self.db['cache']=get_base_node_json()
+        self.db['cache']['parents']=['root']
         # node0 = self.db['nodes'][0]
         # node0['index'] = 'root'
         # node0['parents'] = ['root', ]

@@ -30,6 +30,15 @@ class MetaNode(object):
 
     tags = property(*get_node_property('tags', list))
 
+    def __repr__(self):
+        str_ = ""
+        for k,v in self._node.items():
+            if k =='lines':
+                str_ += "{}:len-{};".format(k,len(v))
+            else:
+                str_ += "{}:{};".format(k,v)
+        return str_
+
 
 class Cache(MetaNode):
 
@@ -40,8 +49,12 @@ class Cache(MetaNode):
         if self.nodes == []:
             raise InitError('empty root')
         self._node = self._db.get_item('cache')
+        print('log cache index',self._node['index'])
         # self.head = self.parents[0]
-        self.lock_branch = False
+        
+        self.lock_branch = False if self.index == "" else True
+        # else:
+            # self.lock_branch = True
 
     def save_node(self):
         # base = deepcopy(base_node_json)
@@ -51,19 +64,17 @@ class Cache(MetaNode):
         # self._node = self.nodes[-1]
         # self.head = index
         # self.index = ''
-        # base = get_base_node_json()
-        # base
         index = self.index
         self.nodes.append(self._node)
-        self.reset()
+        self.clear()
         self.parents = [index,]
         # self.set_parents(index)
         self.lock_branch = False
 
-    def reset(self, ):
-        parents = self._node.parents
+    def clear(self, ):
+        # parents = self._node.parents
         self._node=get_base_node_json()
-        self._node.parents = parents
+        # self._node.parents = parents
         # self.head = self.
 
     # @property
@@ -89,9 +100,11 @@ class Node(MetaNode):
         # raise ValueError('error index')
         if index == 'root':
             self._node = get_base_node_json()
-            self._node.index = 'root'
+            self._node['index'] = 'root'
             return
         for n in self.nodes:
+            if n == 'root':
+                continue
             if n['index'] == index:
                 self._node = n
                 return

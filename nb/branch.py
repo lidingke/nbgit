@@ -2,7 +2,7 @@ import json
 import hashlib
 
 from nb.db import ShelveDB, get_db_dir
-from nb.node import Cache, resume_node, Node
+from nb.node import Cache, resume_node, Node, NodeDB
 from nb.config import CacheLockError, InitError, BranchError
 
 
@@ -23,6 +23,13 @@ def calc_ipynb(ipynb):
     return md5head.hexdigest(), heads, cells
 
 
+def init_cmd(ipynb):
+    db_dir = get_db_dir(ipynb)
+    _db = ShelveDB(db_dir)
+    _db.create_bare_db()
+
+    # _db.cache
+
 class Branch(object):
 
     def __init__(self, ipynb_dir):
@@ -30,8 +37,11 @@ class Branch(object):
         self._db = ShelveDB(db_dir)
         self.ipynb = ipynb_dir
         self.lines_db = self._db.get_item('lines')
+        # print('befor cache init',self._db.get_item('cache'))
         self.cache = Cache(db=self._db)
-        self.nodes = self._db.get_item('nodes')
+        print('init cache:',self.cache.index)
+        # self.nodes = self._db.get_item('nodes')
+        self.nodedb = NodeDB(db=self._db)
         # self.branch_refs = self._db.get_item('branche_refs')
         self.current = CurrentBranch(db=self._db)
         # self.cache = self._db.get_item('cache_node')
@@ -65,6 +75,9 @@ class Branch(object):
 
     def log_cmd(self, ):
         root = self.cache.parents[0]
+        if root == 'root':
+            print('root')
+            return
         root = Node(db=self._db, index=root)
         def get_parents(node):
             n = node.parents[0]
@@ -75,11 +88,6 @@ class Branch(object):
                 node = Node(db=self._db, index=n)
                 get_parents(node)
         get_parents(root)
-                # print()
-        # for n in self.nodes:
-        #     index = n['index']
-        #     parents = n['parents']
-        #     print(index, '=>', parents)
 
 
     def checkout_cmd(self, name):
@@ -98,7 +106,8 @@ class Branch(object):
         if self.cache.lock_branch:
             raise CacheLockError()
         # if index:
-        node = Node(db=self._db, index=index)
+        # node = Node(db=self._db, index=index)
+        node = self.nodedb.get_node(index)
         resume_node(node, self.ipynb)
         # self.cache.parents = 
         self.current.index = index
