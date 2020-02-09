@@ -51,7 +51,7 @@ def constructer(seq,opcodes):
     return seq
 
 
-def Merger(object):
+class Merger(object):
 
     def __init__(self, db):
         self._db = db
@@ -63,6 +63,27 @@ def Merger(object):
         ng = ndiff(n0.lines,n1.lines)
         for n in ng:
             print(n)
+
+    def find_ancestor(self, current, other):
+        pass_indexs = set()
+        self.trace_root(current)
+        import pdb; pdb.set_trace()
+        # while True:
+            # c = current.parents[0]
+            # o = other.parents[0]
+
+    def trace_root(self, nodes):
+        node = nodes[-1]
+        if node == 'root':
+            nodes.append('root')
+            return nodes
+        else:
+            node = self.nodedb.get_node(node)
+            parents = node.parents[0]
+            # new = self.nodedb.get_node(parents)
+            nodes.append(parents)
+            self.trace_root(nodes)
+
 
 # def back_constructer(seq, opcodes):
 #     for tag, i0, i1, seq1 in opcodes:

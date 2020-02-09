@@ -27,6 +27,9 @@ class ShelveDB(object):
         """
         return self.db[key]
 
+    def close(self):
+        self.db.sync()
+
 
 def get_db_dir(current_ipynb):
     """

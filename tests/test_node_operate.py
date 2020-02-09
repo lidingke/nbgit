@@ -47,6 +47,7 @@ def test_log_operate():
     cb = Repo(test_ipynb_dir)
     print('log first',cb.cache.index)
     cb.log_cmd()
+    cb._db.close()
 
 def test_reset_cmd():
     # TODO impl resume cmd
@@ -96,6 +97,7 @@ def test_branch_cmd():
     # import pdb; pdb.set_trace()
     # cb.cache.clear()
     cb.branch_cmd('dog')
+    print('list branch:',cb.current.branchs)
     cb.checkout_cmd('dog')
     nums0 = add_tail_lines(test_ipynb_dir,add_lines)
     cb.add_cmd()
@@ -111,6 +113,20 @@ def test_branch_cmd():
     cb.checkout_cmd('master')
     print('log master')
     cb.log_cmd()
+    print('list branch:',cb.current.branchs)
+    cb._db.close()
+
+
+def test_merge_cmd():
+    cb = Repo(test_ipynb_dir)
+    print(cb.current.branchs)
+    cb.commit_cmd('save bug')
+    print(cb.current.branchs)
+    index0 = cb.current.index
+    cb.checkout_cmd('dog')
+    index1 = cb.current.index
+    cb.merge_cmd(index1,index0)
+    cb._db.close()
 
 
 def test_diff_cmd():
@@ -129,6 +145,3 @@ def test_diff_cmd():
     index1 = cb.commit_cmd('test commit1')
     cb.diff_cmd(index0,index1)
     resume_last_add(test_ipynb_dir,nums0+nums1)
-
-def test_merge_cmd():
-    pass

@@ -112,8 +112,14 @@ class NodeDB(object):
         self.nodes = self._db.get_item('nodes')
 
     def get_node(self, index):
+        if isinstance(index,Node):
+            return index
         n = Node(self._db, index)
         return n
+
+    def save_lines(self,cells):
+        line_db = self._db.get_item('lines')
+        line_db.update(cells)
 
 
 def resume_node(node, ipynb):
