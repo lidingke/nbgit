@@ -49,12 +49,8 @@ class Cache(MetaNode):
         if self.nodes == []:
             raise InitError('empty root')
         self._node = self._db.get_item('cache')
-        print('log cache index',self._node['index'])
-        # self.head = self.parents[0]
-        
         self.lock_branch = False if self.index == "" else True
-        # else:
-            # self.lock_branch = True
+
 
     def save_node(self):
         # base = deepcopy(base_node_json)
@@ -72,18 +68,7 @@ class Cache(MetaNode):
         self.lock_branch = False
 
     def clear(self, ):
-        # parents = self._node.parents
         self._node=get_base_node_json()
-        # self._node.parents = parents
-        # self.head = self.
-
-    # @property
-    # def head(self):
-        # return self.head
-
-    # def set_parents(self, index):
-    #     if index not in self.parents:
-    #         self._node['parents'].append(index)
 
 
 class Node(MetaNode):

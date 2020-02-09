@@ -4,7 +4,7 @@ import hashlib
 from nb.db import ShelveDB, get_db_dir
 from nb.node import Cache, resume_node, Node, NodeDB
 from nb.config import CacheLockError, InitError, BranchError
-
+from nb.diff import Merger
 
 def calc_ipynb(ipynb):
     with open(ipynb, 'rb') as f:
@@ -24,13 +24,17 @@ def calc_ipynb(ipynb):
 
 
 def init_cmd(ipynb):
+    # 1. init db node['root']
+    # 2. init cache
+    # 3. init master branch
+        
     db_dir = get_db_dir(ipynb)
     _db = ShelveDB(db_dir)
     _db.create_bare_db()
 
     # _db.cache
 
-class Branch(object):
+class Repo(object):
 
     def __init__(self, ipynb_dir):
         db_dir = get_db_dir(ipynb_dir)
@@ -39,19 +43,17 @@ class Branch(object):
         self.lines_db = self._db.get_item('lines')
         # print('befor cache init',self._db.get_item('cache'))
         self.cache = Cache(db=self._db)
-        print('init cache:',self.cache.index)
+        # print('init cache:',self.cache.index)
         # self.nodes = self._db.get_item('nodes')
         self.nodedb = NodeDB(db=self._db)
         # self.branch_refs = self._db.get_item('branche_refs')
         self.current = CurrentBranch(db=self._db)
+        self.merger = Merger(db = self._db)
         # self.cache = self._db.get_item('cache_node')
 
-    def init_cmd(self):
-        # 1. init db node['root']
-        # 2. init cache
-        # 3. init master branch
+    # def init_cmd(self):
         
-        self._db.create_bare_db()
+        # self._db.create_bare_db()
 
     def add_cmd(self, ):
         head, head_cells, cells = calc_ipynb(self.ipynb)
@@ -69,6 +71,7 @@ class Branch(object):
         self.cache.commit = commit
         self.cache.save_node()
         self.current.index = index
+
         # self.cache.set_parents(self.current.index)
         self.cache.lock_branch = False
         return index
@@ -95,11 +98,14 @@ class Branch(object):
         # checkout mv HEAD only. reset mv HEAD and REF
         if self.cache.lock_branch:
             raise CacheLockError()
+        # self.cache.
         self.current.name = name
 
     def branch_cmd(self, name):
+        # import pdb; pdb.set_trace()
         head = self.cache.parents[0]
         self.current.index = head
+        self.current.add(name)
 
     def reset_hard_cmd(self, index=None):
         # TODO reset cmd need reimplement
@@ -116,6 +122,19 @@ class Branch(object):
             # parent = self.cache.parents[0]
             # resume_node(node, self.ipynb)
             # self.current.index = index
+
+    def diff_cmd(self, index0,index1):
+        differ(self.nodedb.get_node,index0,index1)
+        # import pdb; pdb.set_trace()
+
+    def merge_cmd(self, current, other):
+        """
+        1. find common ancestor for both branch.
+        2. diff lines on current node.
+        3. diff lines on other node.
+        4. three way merge for two diffs.
+        """
+        pass
 
 
 class CurrentBranch(object):
@@ -147,3 +166,6 @@ class CurrentBranch(object):
     @index.setter
     def index(self, value):
         self.refs[self.current_branch] = value
+
+    def add(self,name):
+        self.refs[name] = None
