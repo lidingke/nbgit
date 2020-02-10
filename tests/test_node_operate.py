@@ -1,19 +1,21 @@
 
 from random import randint
-from nb.branch import   Repo, init_cmd
+from nb.branch import Repo, init_cmd
 from .utils import add_tail_lines, resume_last_add, assert_ipynb
-import shutil 
+import shutil
 test_ipynb_dir = 'data/Untitled.ipynb'
 test_ipynb_dir_origin = 'data/Untitled_origin.ipynb'
 
-shutil.copy(test_ipynb_dir_origin,test_ipynb_dir)
+shutil.copy(test_ipynb_dir_origin, test_ipynb_dir)
+
 
 def get_random_line():
     line = []
-    for i in range(1,randint(3, 20)):
-        c = randint(65,122)
+    for i in range(1, randint(3, 20)):
+        c = randint(65, 122)
         line.append(chr(c))
     return "".join(line)
+
 
 def test_init_bare_repo():
     """
@@ -30,65 +32,71 @@ def test_init_bare_repo():
 
 def test_add_cmd():
     add_lines = []
-    for i in range(1,randint(3,20)):
+    for i in range(1, randint(3, 20)):
         add_lines.append(
-            ((get_random_line(),get_random_line()))
+            ((get_random_line(), get_random_line()))
         )
-    len_ = len(add_lines)    
+    len_ = len(add_lines)
     assert_ipynb(test_ipynb_dir)
     cb = Repo(test_ipynb_dir)
-    nums = add_tail_lines(test_ipynb_dir,add_lines)
+    nums = add_tail_lines(test_ipynb_dir, add_lines)
     cb.add_cmd()
     cb.commit_cmd('test commit')
-    resume_last_add(test_ipynb_dir,nums)
+    resume_last_add(test_ipynb_dir, nums)
     cb.log_cmd()
+    cb._db.sync()
+
 
 def test_log_operate():
     cb = Repo(test_ipynb_dir)
-    print('log first',cb.cache.index)
+    print('log first', cb.cache.index)
     cb.log_cmd()
-    cb._db.close()
+    cb._db.sync()
+
 
 def test_reset_cmd():
     # TODO impl resume cmd
     add_lines = []
-    for i in range(1,randint(3,20)):
+    for i in range(1, randint(3, 20)):
         add_lines.append(
-            ((get_random_line(),get_random_line()))
+            ((get_random_line(), get_random_line()))
         )
-    # len_ = len(add_lines)    
+    # len_ = len(add_lines)
     assert_ipynb(test_ipynb_dir)
     cb = Repo(test_ipynb_dir)
-    nums0 = add_tail_lines(test_ipynb_dir,add_lines)
+    nums0 = add_tail_lines(test_ipynb_dir, add_lines)
     cb.add_cmd()
     index0 = cb.commit_cmd('test commit0')
-    nums1 = add_tail_lines(test_ipynb_dir,add_lines)
+    nums1 = add_tail_lines(test_ipynb_dir, add_lines)
     cb.add_cmd()
     index1 = cb.commit_cmd('test commit1')
-    nums2 = add_tail_lines(test_ipynb_dir,add_lines)
+    nums2 = add_tail_lines(test_ipynb_dir, add_lines)
     cb.add_cmd()
     index2 = cb.commit_cmd('test commit2')
     print('log at commits')
     print(cb.cache)
     # cb2 = Branch(test_ipynb_dir)
-    print('log at commits afer Branch',cb.cache.index)
+    print('log at commits afer Branch', cb.cache.index)
     cb.log_cmd()
     cb.reset_hard_cmd(index=index0)
-    resume_last_add(test_ipynb_dir,nums0)
+    resume_last_add(test_ipynb_dir, nums0)
     print('log at reset')
     print(cb.cache)
     cb.log_cmd()
+    cb._db.sync()
+
 
 def test_log_operate2():
     print('log 2:')
     cb = Repo(test_ipynb_dir)
     cb.log_cmd()
 
+
 def test_branch_cmd():
     add_lines = []
-    for i in range(1,randint(3,20)):
+    for i in range(1, randint(3, 20)):
         add_lines.append(
-            ((get_random_line(),get_random_line()))
+            ((get_random_line(), get_random_line()))
         )
     assert_ipynb(test_ipynb_dir)
     cb = Repo(test_ipynb_dir)
@@ -97,15 +105,15 @@ def test_branch_cmd():
     # import pdb; pdb.set_trace()
     # cb.cache.clear()
     cb.branch_cmd('dog')
-    print('list branch:',cb.current.branchs)
+    print('list branch:', cb.current.branchs)
     cb.checkout_cmd('dog')
-    nums0 = add_tail_lines(test_ipynb_dir,add_lines)
+    nums0 = add_tail_lines(test_ipynb_dir, add_lines)
     cb.add_cmd()
     index0 = cb.commit_cmd('test commit0')
-    nums1 = add_tail_lines(test_ipynb_dir,add_lines)
+    nums1 = add_tail_lines(test_ipynb_dir, add_lines)
     cb.add_cmd()
     index1 = cb.commit_cmd('test commit1')
-    nums2 = add_tail_lines(test_ipynb_dir,add_lines)
+    nums2 = add_tail_lines(test_ipynb_dir, add_lines)
     cb.add_cmd()
     index2 = cb.commit_cmd('test commit2')
     print('log dog')
@@ -113,8 +121,8 @@ def test_branch_cmd():
     cb.checkout_cmd('master')
     print('log master')
     cb.log_cmd()
-    print('list branch:',cb.current.branchs)
-    cb._db.close()
+    print('list branch:', cb.current.branchs)
+    cb._db.sync()
 
 
 def test_merge_cmd():
@@ -125,23 +133,24 @@ def test_merge_cmd():
     index0 = cb.current.index
     cb.checkout_cmd('dog')
     index1 = cb.current.index
-    cb.merge_cmd(index1,index0)
-    cb._db.close()
+    cb.merge_cmd(index1, index0)
+    cb._db.sync()
 
 
 def test_diff_cmd():
     add_lines = []
-    for i in range(1,randint(3,20)):
+    for i in range(1, randint(3, 20)):
         add_lines.append(
-            ((get_random_line(),get_random_line()))
+            ((get_random_line(), get_random_line()))
         )
     assert_ipynb(test_ipynb_dir)
     cb = Repo(test_ipynb_dir)
-    nums0 = add_tail_lines(test_ipynb_dir,add_lines)
+    nums0 = add_tail_lines(test_ipynb_dir, add_lines)
     cb.add_cmd()
     index0 = cb.commit_cmd('test commit0')
-    nums1 = add_tail_lines(test_ipynb_dir,add_lines)
+    nums1 = add_tail_lines(test_ipynb_dir, add_lines)
     cb.add_cmd()
     index1 = cb.commit_cmd('test commit1')
-    cb.diff_cmd(index0,index1)
-    resume_last_add(test_ipynb_dir,nums0+nums1)
+    cb.diff_cmd(index0, index1)
+    resume_last_add(test_ipynb_dir, nums0+nums1)
+    cb._db.sync()

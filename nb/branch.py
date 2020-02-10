@@ -2,7 +2,7 @@ import json
 import hashlib
 
 from nb.db import ShelveDB, get_db_dir
-from nb.node import Cache, resume_node, Node, NodeDB
+from nb.node import Cache, resume_node, Node, NodeDB, Branch
 from nb.config import CacheLockError, InitError, BranchError
 from nb.diff import Merger
 
@@ -57,7 +57,7 @@ class Repo(object):
         # self.nodes = self._db.get_item('nodes')
         self.nodedb = NodeDB(db=self._db)
         # self.branch_refs = self._db.get_item('branche_refs')
-        self.current = CurrentBranch(db=self._db)
+        self.current = Branch(db=self._db)
         self.merger = Merger(db=self._db)
         # self.cache = self._db.get_item('cache_node')
 
@@ -145,42 +145,10 @@ class Repo(object):
         3. diff lines on other node.
         4. three way merge for two diffs.
         """
-        self.merger.trace_root([self.current.index])
+        # lst = self.merger.trace_root([self.current.index])
+        # ancestor = self.merger.find_ancestor(current,other)
+        # import pdb; pdb.set_trace()
+        self.merger.auto_merge(other)
 
 
-class CurrentBranch(object):
 
-    def __init__(self, db):
-        self._db = db
-        self.refs = self._db.get_item('branch_refs')
-        self.current_branch = self._db.get_item('current_branch')
-        # self.branch_refs = self._db.get_item('branch_refs')
-
-    @property
-    def name(self):
-        return self.current_branch
-
-    @name.setter
-    def name(self, value):
-        if self.current_branch == value:
-            raise ValueError(
-                'current ref name as same as input:{}'.format(value))
-        if value not in self.refs.keys():
-            raise BranchError('branch-{} unexist.')
-        self.current_branch = value
-
-    @property
-    def index(self):
-        return self.refs[self.current_branch]
-
-    @index.setter
-    def index(self, value):
-        self.refs[self.current_branch] = value
-
-    def add(self, name):
-        self.refs[name] = None
-
-
-    @property
-    def branchs(self):
-        return set(self.refs.keys())

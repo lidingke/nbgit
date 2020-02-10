@@ -133,3 +133,42 @@ def resume_node(node, ipynb):
     js['cells'] = node.get_cells()
     with open(ipynb, 'wb') as f:
         f.write(json.dumps(js).encode('utf-8'))
+
+class Branch(object):
+
+    def __init__(self, db):
+        self._db = db
+        self.refs = self._db.get_item('branch_refs')
+        self.current_branch = self._db.get_item('current_branch')
+        # self.branch_refs = self._db.get_item('branch_refs')
+
+    @property
+    def name(self):
+        return self.current_branch
+
+    @name.setter
+    def name(self, value):
+        if self.current_branch == value:
+            raise ValueError(
+                'current ref name as same as input:{}'.format(value))
+        if value not in self.refs.keys():
+            raise BranchError('branch-{} unexist.')
+        self.current_branch = value
+
+    @property
+    def index(self):
+        return self.refs[self.current_branch]
+
+    @index.setter
+    def index(self, value):
+        self.refs[self.current_branch] = value
+
+    def add(self, name):
+        self.refs[name] = None
+
+    def get_ref(self, name):
+        return self.refs[name]
+
+    @property
+    def branchs(self):
+        return set(self.refs.keys())

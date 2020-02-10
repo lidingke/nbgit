@@ -27,7 +27,7 @@ class ShelveDB(object):
         """
         return self.db[key]
 
-    def close(self):
+    def sync(self):
         self.db.sync()
 
 
